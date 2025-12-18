@@ -2,12 +2,18 @@
 {% block content %}
 
 <h3>Register</h3>
+{% if error %}
+  <p class="notice">{{ error }}</p>
+{% endif %}
 <form method="post">
     <label>Username</label>
-    <input name="username">
+    <input type="text" name="username" placeholder="choose a username" autofocus required>
 
     <label>Password</label>
-    <input type="password" name="password">
+    <input type="password" name="password" placeholder="choose a password" required>
+
+    <label>Confirm Password</label>
+    <input type="password" name="confirm" placeholder="repeat password" required>
 
     <button class="btn">Register</button>
 </form> 

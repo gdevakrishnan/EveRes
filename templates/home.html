@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Welcome, {{ username }}!</h2>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:12px;">
+  <div class="card" style="flex:1; min-width:160px;">
+    <strong>{{ total_events }}</strong>
+    <div style="color:var(--muted); margin-top:6px">Total events</div>
+  </div>
+
+  <div class="card" style="flex:1; min-width:160px;">
+    <strong>{{ total_resources }}</strong>
+    <div style="color:var(--muted); margin-top:6px">Resources</div>
+  </div>
+
+  <div class="card" style="flex:1; min-width:160px;">
+    <strong>{{ total_allocations }}</strong>
+    <div style="color:var(--muted); margin-top:6px">Allocations</div>
+  </div>
+</div>
+
+<hr>
+
+<h3>Upcoming Events</h3>
+{% if upcoming %}
+  <ul>
+  {% for e in upcoming %}
+    <li class="event-item">
+      <strong>{{ e.title }}</strong>
+      <div style="color:var(--muted);">{{ e.start }} → {{ e.end }}</div>
+      <div style="margin-top:6px">{{ e.description }}</div>
+    </li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No upcoming events</p>
+{% endif %}
+
+<div style="margin-top:18px">
+  <a class="btn" href="/events">Go to Events</a>
+  <a class="btn btn-outline" href="/resources">Resources</a>
+  <a class="btn btn-outline" href="/allocate">Allocate</a>
+</div>
+
+{% endblock %}

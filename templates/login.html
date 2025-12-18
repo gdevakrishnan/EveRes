@@ -2,12 +2,15 @@
 {% block content %}
 
 <h3>Login</h3>
+{% if error %}
+  <p class="notice">{{ error }}</p>
+{% endif %}
 <form method="post">
     <label>Username</label>
-    <input name="username">
+    <input type="text" name="username" placeholder="your username" autofocus required>
 
     <label>Password</label>
-    <input type="password" name="password">
+    <input type="password" name="password" placeholder="your password" required>
 
     <button class="btn">Login</button>
 </form> 

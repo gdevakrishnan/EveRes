@@ -31,9 +31,22 @@ def login_required(f):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
+        confirm = request.form.get("confirm", "")
+
+        if not username or not password:
+            return render_template("register.html", error="Username and password are required")
+
+        if password != confirm:
+            return render_template("register.html", error="Passwords do not match")
+
+        if users_col.find_one({"username": username}):
+            return render_template("register.html", error="Username already taken")
+
         users_col.insert_one({
-            "username": request.form["username"],
-            "password": generate_password_hash(request.form["password"])
+            "username": username,
+            "password": generate_password_hash(password)
         })
         return redirect("/login")
     return render_template("register.html")
@@ -41,11 +54,15 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        user = users_col.find_one({"username": request.form["username"]})
-        if user and check_password_hash(user["password"], request.form["password"]):
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+
+        user = users_col.find_one({"username": username})
+        if user and check_password_hash(user["password"], password):
             session["user"] = user["username"]
-            return redirect("/events")
-        return "Invalid credentials"
+            return redirect("/home")
+
+        return render_template("login.html", error="Invalid username or password")
     return render_template("login.html")
 
 @app.route("/logout")
@@ -56,8 +73,25 @@ def logout():
 @app.route("/")
 def index():
     if "user" in session:
-        return redirect("/events")
+        return redirect("/home")
     return render_template("index.html")
+
+@app.route("/home")
+@login_required
+def home():
+    # basic dashboard after login
+    username = session.get("user")
+    total_events = events_col.count_documents({})
+    total_resources = resources_col.count_documents({})
+    total_allocations = allocations_col.count_documents({})
+    upcoming = list(events_col.find({"start": {"$gt": datetime.now()}}).sort("start", 1).limit(5))
+
+    return render_template("home.html",
+                           username=username,
+                           total_events=total_events,
+                           total_resources=total_resources,
+                           total_allocations=total_allocations,
+                           upcoming=upcoming)
 
 # ------------------ Events ------------------
 @app.route("/events", methods=["GET", "POST"])
