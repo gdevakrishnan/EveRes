@@ -31,7 +31,7 @@ a:hover { text-decoration: underline; }
   box-shadow: 0 2px 8px rgba(16, 9, 30, 0.06);
 }
 .site-header .container { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.logo a { color: #fff; font-weight:700; font-size:1.1rem; }
+.logo a { color: #fff; font-weight:700; font-size:1.8rem; }
 .main-nav a { color: rgba(255,255,255,0.92); margin-left:12px; font-weight:600; }
 
 .main { padding: 18px 0; }
