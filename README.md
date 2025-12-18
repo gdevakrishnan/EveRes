@@ -82,4 +82,4 @@ python app.py
 Contributions welcome — create an issue or a PR with fixes or improvements.
 
 ## License
-This project is provided as-is. Add a license file if you plan to publish publicly.
+MIT License
