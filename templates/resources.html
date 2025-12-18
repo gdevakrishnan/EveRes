@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Resources</h3>
+
+<form method="post">
+    <label>Name</label>
+    <input type="text" name="name" placeholder="e.g. Projector, Meeting Room">
+
+    <label>Type</label>
+    <input type="text" name="type" placeholder="e.g. Equipment, Space">
+
+    <button class="btn">Add Resource</button>
+</form>
+
+<hr>
+
+<h4>Available Resources</h4>
+<ul>
+{% for r in resources %}
+    <li>
+        <div class="event-item">{{ r.name }} <small style="color:var(--muted)">({{ r.type }})</small></div>
+    </li>
+{% else %}
+    <li>No resources available</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

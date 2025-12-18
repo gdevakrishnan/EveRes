@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Events</h3>
+
+<form method="post">
+    <label>Title</label>
+    <input name="title" type="text" placeholder="Give your event a clear title">
+
+    <div class="form-row">
+      <div>
+        <label>Start</label>
+        <input type="datetime-local" name="start">
+      </div>
+      <div>
+        <label>End</label>
+        <input type="datetime-local" name="end">
+      </div>
+    </div>
+
+    <label>Description</label>
+    <textarea name="desc" rows="4" placeholder="Add a short description about the event..."></textarea>
+
+    <button class="btn">Add Event</button>
+</form> 
+
+<hr>
+
+<h4>Existing Events</h4>
+<ul>
+{% for e in events %}
+    <li>
+        <div class="event-item">
+          <strong>{{ e.title }}</strong><br>
+          <small style="color:var(--muted)">{{ e.start }} → {{ e.end }}</small>
+          <p style="margin-top:8px">{{ e.description }}</p>
+        </div>
+    </li>
+{% else %}
+    <li>No events found</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
