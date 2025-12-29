@@ -31,6 +31,31 @@ EveRes/
 └─ README.md
 ```
 
+## Architecture / Workflow Diagram
+```mermaid
+flowchart TD
+    A[Open Application] --> B{Logged In?}
+
+    B -- No --> C[Login / Register]
+    C --> D[Authenticate User]
+    D --> E[Dashboard]
+
+    B -- Yes --> E[Dashboard]
+
+    E --> F[Create Events]
+    E --> G[Add Resources]
+    E --> H[Allocate Resource]
+
+    H --> I{Conflict?}
+    I -- Yes --> J[Show Error]
+    I -- No --> K[Save Allocation]
+
+    E --> L[Generate Report]
+
+    E --> M[Logout]
+    M --> C
+```
+
 ## Quickstart (Windows)
 1. Create a venv and activate it:
 
